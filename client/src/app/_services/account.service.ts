@@ -9,8 +9,9 @@ import { User } from '@app/_models';
 
 @Injectable({ providedIn: 'root' })
 export class AccountService {
+    user: Observable<User>;
+
     private userSubject: BehaviorSubject<User>;
-    public user: Observable<User>;
 
     constructor(
         private router: Router,
@@ -20,7 +21,7 @@ export class AccountService {
         this.user = this.userSubject.asObservable();
     }
 
-    public get userValue(): User {
+    get userValue(): User {
         return this.userSubject.value;
     }
 
