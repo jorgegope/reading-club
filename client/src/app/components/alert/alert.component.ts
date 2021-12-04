@@ -2,8 +2,8 @@
 import { Router, NavigationStart } from '@angular/router';
 import { Subscription } from 'rxjs';
 
-import { Alert, AlertType } from '@app/_models';
-import { AlertService } from '@app/_services';
+import { Alert, AlertType } from '@app/models';
+import { AlertService } from '@app/services';
 
 @Component({ selector: 'alert', templateUrl: 'alert.component.html' })
 export class AlertComponent implements OnInit, OnDestroy {
@@ -14,19 +14,22 @@ export class AlertComponent implements OnInit, OnDestroy {
     alertSubscription: Subscription;
     routeSubscription: Subscription;
 
-    constructor(private router: Router, private alertService: AlertService) { }
+    constructor(private router: Router, private alertService: AlertService) {}
 
     ngOnInit() {
         // subscribe to new alert notifications
-        this.alertSubscription = this.alertService.onAlert(this.id)
-            .subscribe(alert => {
+        this.alertSubscription = this.alertService
+            .onAlert(this.id)
+            .subscribe((alert) => {
                 // clear alerts when an empty alert is received
                 if (!alert.message) {
                     // filter out alerts without 'keepAfterRouteChange' flag
-                    this.alerts = this.alerts.filter(x => x.keepAfterRouteChange);
+                    this.alerts = this.alerts.filter(
+                        (x) => x.keepAfterRouteChange
+                    );
 
                     // remove 'keepAfterRouteChange' flag on the rest
-                    this.alerts.forEach(x => delete x.keepAfterRouteChange);
+                    this.alerts.forEach((x) => delete x.keepAfterRouteChange);
                     return;
                 }
 
@@ -37,10 +40,10 @@ export class AlertComponent implements OnInit, OnDestroy {
                 if (alert.autoClose) {
                     setTimeout(() => this.removeAlert(alert), 3000);
                 }
-           });
+            });
 
         // clear alerts on location change
-        this.routeSubscription = this.router.events.subscribe(event => {
+        this.routeSubscription = this.router.events.subscribe((event) => {
             if (event instanceof NavigationStart) {
                 this.alertService.clear(this.id);
             }
@@ -63,11 +66,11 @@ export class AlertComponent implements OnInit, OnDestroy {
 
             // remove alert after faded out
             setTimeout(() => {
-                this.alerts = this.alerts.filter(x => x !== alert);
+                this.alerts = this.alerts.filter((x) => x !== alert);
             }, 250);
         } else {
             // remove alert
-            this.alerts = this.alerts.filter(x => x !== alert);
+            this.alerts = this.alerts.filter((x) => x !== alert);
         }
     }
 
@@ -75,13 +78,13 @@ export class AlertComponent implements OnInit, OnDestroy {
         if (!alert) return;
 
         const classes = ['alert', 'alert-dismissable', 'mt-4', 'container'];
-                
+
         const alertTypeClass = {
             [AlertType.Success]: 'alert alert-success',
             [AlertType.Error]: 'alert alert-danger',
             [AlertType.Info]: 'alert alert-info',
-            [AlertType.Warning]: 'alert alert-warning'
-        }
+            [AlertType.Warning]: 'alert alert-warning',
+        };
 
         classes.push(alertTypeClass[alert.type]);
 

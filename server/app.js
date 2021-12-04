@@ -1,4 +1,4 @@
-var mongoose = require('mongoose');
+const mongoose = require('mongoose');
 
 function serve() {
     setEnvironment();
@@ -7,7 +7,7 @@ function serve() {
 }
 
 function setEnvironment() {
-    var fs = require('fs');
+    const fs = require('fs');
 
     if (!process.env.NODE_ENV) {
         process.env.NODE_ENV = 'dev';
@@ -31,8 +31,8 @@ function initExpress(db) {
 }
 
 function initDB() {
-    var initdb = require('./initDB');
-    initdb.init();
+    const initDb = require('./initDB');
+    initDb.init();
 }
 
 function startServer(config) {
