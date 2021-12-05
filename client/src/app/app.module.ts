@@ -8,9 +8,10 @@ import { AppComponent } from './app.component';
 import { AlertComponent } from './components';
 import { HomeComponent } from './pages/home';
 import { ClubComponent } from './components/club/club.component';
+import { ClubListComponent } from './components/club-list/club-list.component';
 
 @NgModule({
-    declarations: [AppComponent, AlertComponent, HomeComponent, ClubComponent],
+    declarations: [AppComponent, AlertComponent, HomeComponent, ClubComponent, ClubListComponent],
     imports: [BrowserModule, AppRoutingModule, HttpClientModule],
     providers: [
         { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
