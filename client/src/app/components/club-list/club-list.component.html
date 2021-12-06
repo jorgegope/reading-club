@@ -1,9 +1,29 @@
 <div class="club-list">
-    <div class="club-list__club" *ngFor="let club of clubList">
-        <app-club
-            [name]="club.name"
-            [image]="club.image"
-            [created]="club.created"
-        ></app-club>
+    <div class="club-list__back">
+        <div
+            class="
+                club-list__pagination-button club-list__pagination-button--back
+            "
+            [class.club-list__pagination-button--disabled]="isFirstPage()"
+            (click)="previousPage()"
+        ></div>
+    </div>
+    <div class="club-list__list">
+        <div class="club-list__club" *ngFor="let club of clubsOnThePage">
+            <app-club
+                [name]="club.name"
+                [image]="club.image"
+                [created]="club.created"
+            ></app-club>
+        </div>
+    </div>
+    <div class="club-list__next">
+        <div
+            class="
+                club-list__pagination-button club-list__pagination-button--next
+            "
+            [class.club-list__pagination-button--disabled]="isLastPage()"
+            (click)="nextPage()"
+        ></div>
     </div>
 </div>
