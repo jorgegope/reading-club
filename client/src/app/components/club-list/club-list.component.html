@@ -11,9 +11,7 @@
     <div class="club-list__list">
         <div class="club-list__club" *ngFor="let club of clubsOnThePage">
             <app-club
-                [name]="club.name"
-                [image]="club.image"
-                [created]="club.created"
+                [club]="club"
             ></app-club>
         </div>
     </div>

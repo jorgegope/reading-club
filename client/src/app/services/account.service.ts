@@ -63,7 +63,7 @@ export class AccountService {
         return this.http.put(`${environment.apiUrl}/users/${id}`, params).pipe(
             map((x) => {
                 // update stored user if the logged in user updated their own record
-                if (id == this.userValue.id) {
+                if (id === this.userValue.username) {
                     // update local storage
                     const user = { ...this.userValue, ...params };
                     localStorage.setItem('user', JSON.stringify(user));
@@ -76,11 +76,31 @@ export class AccountService {
         );
     }
 
+    followClub(club) {
+        return this.http
+            .put(`${environment.apiUrl}/users/follow`, {
+                username: this.userValue.username,
+                club,
+            })
+            .pipe(
+                map((x) => {
+                    // update local storage
+                    const user = { ...this.userValue };
+                    user.clubs.push(club);
+                    localStorage.setItem('user', JSON.stringify(user));
+
+                    // publish updated user to subscribers
+                    this.userSubject.next(user);
+                    return x;
+                })
+            );
+    }
+
     delete(id: string) {
         return this.http.delete(`${environment.apiUrl}/users/${id}`).pipe(
             map((x) => {
                 // auto logout if the logged in user deleted their own record
-                if (id == this.userValue.id) {
+                if (id == this.userValue.username) {
                     this.logout();
                 }
                 return x;
