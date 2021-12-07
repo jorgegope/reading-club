@@ -40,7 +40,7 @@ function startServer(config) {
         mongoose.set('useCreateIndex', true);
         let app = initExpress(db);
         exports = module.exports = app;
-    
+
         app.listen(config.port, () => {
             console.log('Bookclub started using the "' + process.env.NODE_ENV + '" environment configuration on port ' + config.port + '!')
             initDB();

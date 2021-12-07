@@ -1,6 +1,6 @@
 'use strict';
 
-var express = require('express');
+const express = require('express');
 const config = require('./config');
 const path = require('path');
 const cors = require('cors');
@@ -8,7 +8,7 @@ const bodyParser = require('body-parser');
 const methodOverride = require('method-override');
 
 module.exports = function(db) {
-	var app = express();
+	let app = express();
 
 	enableCors(app);
 	loadModels();
